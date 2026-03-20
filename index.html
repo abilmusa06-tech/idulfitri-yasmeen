@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f9d58" />
+    <title>Untuk Yasmeen</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background: radial-gradient(circle, #0f5132, #000);
+        color: white;
+        text-align: center;
+        overflow-x: hidden;
+      }
+
+      /* container */
+      .container {
+        margin-top: 80px;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 2em;
+      }
+
+      /* tombol */
+      button {
+        margin-top: 25px;
+        padding: 14px 35px;
+        border: none;
+        border-radius: 30px;
+        background: linear-gradient(45deg, gold, #f4d03f);
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      /* SURPRISE MODE */
+      .surprise-mode {
+        background: linear-gradient(135deg, #f4d03f, #0f9d58);
+        color: #0f5132;
+        transition: 1s;
+      }
+
+      #surpriseText {
+        display: none;
+        font-size: 1.1em;
+        margin-top: 20px;
+        line-height: 1.6;
+        animation: fadeIn 2s;
+      }
+
+      /* animasi */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* confetti */
+      .confetti {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: gold;
+        animation: fall linear infinite;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-100vh);
+        }
+        100% {
+          transform: translateY(100vh);
+        }
+      }
+
+      /* RESPONSIVE HP */
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 1.6em;
+        }
+        #surpriseText {
+          font-size: 1em;
+        }
+        button {
+          width: 80%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1 id="title"></h1>
+
+      <p id="message">...</p>
+
+      <button onclick="startSurprise()">Buka ya 🎁</button>
+
+      <div id="surpriseText">
+        🌙 Selamat Idul Fitri Yasmeen <br /><br />
+
+        Maaf ya kalau aku pernah salah kata atau sikap 🙏<br /><br />
+
+        Jujur aja... kehadiran yasmeen itu berarti banget 😊<br />
+        Walaupun mungkin aku ga selalu bilang langsung.<br /><br />
+
+        Semoga yasmeen selalu sehat ya <br />
+        Diberi kebahagiaan terus, dimudahkan semua urusan kamu,<br />
+        dan semua hal baik selalu datang ke hidup yasmeen ✨<br /><br />
+
+        Semoga juga orang tua yasmeen selalu sehat 🙏<br />
+        Dipanjangkan umurnya, dilancarkan rezekinya,<br />
+        dan selalu dalam lindungan Allah 🤲<br /><br />
+
+        Tetap jadi Yasmeen yang aku kenal ya...<br />
+        yang selalu punya cara sendiri buat bikin hari jadi lebih baik 😊
+      </div>
+    </div>
+
+    <audio id="music" loop>
+      <source src="lagu-lebaran.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+      let music = document.getElementById("music");
+
+      // typing nama
+      let text = "Untuk Yasmeen ";
+      let i = 0;
+
+      function typing() {
+        if (i < text.length) {
+          document.getElementById("title").innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typing, 100);
+        }
+      }
+      typing();
+
+      // pesan awal
+      setTimeout(() => {
+        document.getElementById("message").innerHTML =
+          "Aku ada sesuatu buat yasmeen... 😊";
+      }, 2000);
+
+      // surprise
+      function startSurprise() {
+        document.body.classList.add("surprise-mode");
+
+        let textBox = document.getElementById("surpriseText");
+        textBox.style.display = "block";
+
+        // efek zoom + glow
+        textBox.style.transform = "scale(0.8)";
+        textBox.style.transition = "0.8s";
+
+        setTimeout(() => {
+          textBox.style.transform = "scale(1)";
+          textBox.style.textShadow = "0 0 20px gold";
+        }, 200);
+
+        // musik fade in
+        music.volume = 0;
+        music.play();
+
+        let vol = 0;
+        let fade = setInterval(() => {
+          if (vol < 1) {
+            vol += 0.05;
+            music.volume = vol;
+          } else {
+            clearInterval(fade);
+          }
+        }, 200);
+
+        // confetti
+        for (let i = 0; i < 120; i++) {
+          let confetti = document.createElement("div");
+          confetti.classList.add("confetti");
+          confetti.style.left = Math.random() * 100 + "vw";
+          confetti.style.animationDuration = Math.random() * 3 + 2 + "s";
+          confetti.style.opacity = Math.random();
+          confetti.style.background = ["gold", "white", "#0f9d58", "#f4d03f"][
+            Math.floor(Math.random() * 4)
+          ];
+          document.body.appendChild(confetti);
+        }
+
+        // tambahan kata
+        setTimeout(() => {
+          textBox.innerHTML +=
+            "<br><br> Makasih ya udah jadi bagian dari hari-hariku...";
+        }, 3000);
+
+        // ending
+        setTimeout(() => {
+          alert("✨ Dari aku yang selalu doain yasmeen diam-diam mwuhehe 😊");
+        }, 5000);
+      }
+    </script>
+  </body>
+</html>
